@@ -4,6 +4,7 @@ Item {
     id: root
 
     property string icon
+    property bool isChoosen: false
 
     width: wrap.width
     height: wrap.height
@@ -41,6 +42,17 @@ Item {
 
                 source: Qt.resolvedUrl("../" + root.icon)
             }
+
+            states: [
+                State {
+                    name: "choosen"
+                    when: root.isChoosen
+                    PropertyChanges {
+                        target: content
+                        size: 30
+                    }
+                }
+            ]
         }
     }
 }

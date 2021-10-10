@@ -17,18 +17,22 @@ Window {
 
         ListElement{
             icon: "images/pen.png"
+            isChoosen: true
         }
 
         ListElement{
             icon: "images/rectangle.png"
+            isChoosen: false
         }
 
         ListElement{
             icon: "images/ellipse.png"
+            isChoosen: false
         }
 
         ListElement{
             icon: "images/text-option.png"
+            isChoosen: false
         }
     }
 
@@ -37,6 +41,7 @@ Window {
 
         ToolItem{
             icon: model.icon
+            isChoosen: model.isChoosen
         }
     }
 
