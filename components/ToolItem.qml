@@ -5,31 +5,42 @@ Item {
 
     property string icon
 
-    width: content.width
-    height: content.height
+    width: wrap.width
+    height: wrap.height
 
     Rectangle{
-        id: content
+        id: wrap
 
         property int size: 30
 
         width: size
         height: size
 
-        border.color: "black"
-        border.width: 2
+        Rectangle{
+            id: content
 
-        radius: size / 6
-
-        Image {
-            id: image
+            property int size: 20
 
             anchors.centerIn: parent
 
-            width: content.size - 10
-            height: content.size - 10
+            width: size
+            height: size
 
-            source: Qt.resolvedUrl("../" + root.icon)
+            border.color: "black"
+            border.width: 2
+
+            radius: size / 6
+
+            Image {
+                id: image
+
+                anchors.centerIn: parent
+
+                width: content.size - 10
+                height: content.size - 10
+
+                source: Qt.resolvedUrl("../" + root.icon)
+            }
         }
     }
 }
