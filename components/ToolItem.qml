@@ -1,10 +1,13 @@
-import QtQuick 2.0
+import QtQuick 2.15
 
 Item {
     id: root
 
     property string icon
     property bool isChoosen: false
+    property int type
+
+    signal choose(int type)
 
     width: wrap.width
     height: wrap.height
@@ -41,6 +44,13 @@ Item {
                 height: content.size - 10
 
                 source: Qt.resolvedUrl("../" + root.icon)
+            }
+
+            TapHandler{
+                onTapped: {
+                    //root.isChoosen = true;
+                    root.choose(root.type);
+                }
             }
 
             states: [
