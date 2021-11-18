@@ -88,6 +88,8 @@ Window {
         width: toolsRow.width
         height: toolsRow.height
 
+
+
         Row{
             id: toolsRow
 
@@ -120,8 +122,12 @@ Window {
 
                     TapHandler{
                         onTapped: {
-
+                            fillColorPickerPopUp.open()
                         }
+                    }
+
+                    ColorPicker{
+                        id: fillColorPickerPopUp
                     }
                 }
             }
@@ -147,8 +153,12 @@ Window {
 
                     TapHandler{
                         onTapped: {
-
+                           borderColorPickerPopUp.open();
                         }
+                    }
+
+                    ColorPicker{
+                        id: borderColorPickerPopUp
                     }
                 }
             }
