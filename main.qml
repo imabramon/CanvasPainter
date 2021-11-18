@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.12
+import QtQuick.Dialogs 1.3
 
 import "components"
 import toolType 1.0
@@ -13,10 +14,13 @@ Window {
     visible: true
     title: qsTr("Canvas Painter")
 
+
+
     ListModel{
         id: toolsModel
 
         function chooseTool(type){
+            toolBar.currentToolType = type
             var lenght = toolsModel.count;
             for(var i = 0; i < lenght; i++){
                 if(i === type){
@@ -42,13 +46,13 @@ Window {
         ListElement{
             icon: "images/ellipse.png"
             isChoosen: false
-             toolType: ToolType.Ellipse
+            toolType: ToolType.Ellipse
         }
 
         ListElement{
             icon: "images/text-option.png"
             isChoosen: false
-             toolType: ToolType.Text
+            toolType: ToolType.Text
         }
     }
 
@@ -69,6 +73,11 @@ Window {
     }
 
     Rectangle{
+        id: toolBar
+
+        property int currentToolType: ToolType.Pen
+        property color currentFillColor: "green"
+        property color currentBorderColor: "black"
 
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -89,6 +98,59 @@ Window {
             Repeater{
                 model: toolsModel
                 delegate: toolItemDelegate
+            }
+
+            Rectangle{
+                id: fillColorPickerWraper
+
+                width: 30
+                height: 30
+
+                Rectangle{
+                    id: fillColorPicker
+
+                    width: 20
+                    height: 20
+
+                    radius: 10
+
+                    anchors.centerIn: parent
+
+                    color: toolBar.currentFillColor
+
+                    TapHandler{
+                        onTapped: {
+
+                        }
+                    }
+                }
+            }
+
+            Rectangle{
+                id: borderColorPickerWraper
+
+                width: 30
+                height: 30
+
+                Rectangle{
+                    id: borderColorPicker
+
+                    width: 20
+                    height: 20
+
+                    radius: 10
+
+                    anchors.centerIn: parent
+
+                    border.color: toolBar.currentBorderColor
+                    border.width: 5
+
+                    TapHandler{
+                        onTapped: {
+
+                        }
+                    }
+                }
             }
         }
 
