@@ -1,6 +1,6 @@
 import QtQuick 2.15
 
-import toolType 1.0
+import ToolType 1.0
 
 Item {
     id: root
