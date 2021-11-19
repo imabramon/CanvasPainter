@@ -6,5 +6,7 @@
         <file>images/rectangle.png</file>
         <file>images/text-option.png</file>
         <file>components/ToolItem.qml</file>
+        <file>components/ColorPicker.qml</file>
+        <file>components/PainterToolBar.qml</file>
     </qresource>
 </RCC>
