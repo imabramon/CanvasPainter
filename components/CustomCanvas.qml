@@ -75,7 +75,7 @@ Canvas {
         console.log("height is " + data.height);
 
         ctx.fillStyle = fillColor;
-        ctx.borderStyle = borderColor;
+        ctx.strokeStyle = borderColor;
 
         var x = data.x;
         var y = data.y;
@@ -87,6 +87,7 @@ Canvas {
     }
 
     function drawCircle(ctx, fillColor, borderColor, data){
+        var ctx = canvas.getContext("2d");
         console.log("Draw circle=========================");
         console.log("fill color is " + fillColor);
         console.log("border color is " + borderColor);
@@ -98,11 +99,10 @@ Canvas {
         var y = data.y;
         var radius = data.radius;
 
-        ctx.fillStyle = fillColor;
-        ctx.borderStyle = borderColor;
 
         ctx.beginPath();
         ctx.arc(x,y,radius,0,Math.PI*2,false);
+        ctx.closePath();
         ctx.fill();
         ctx.stroke();
     }
@@ -115,9 +115,6 @@ Canvas {
         console.log("y coordinate is " + data.y);
         console.log("Text is \"" + data.text + "\"");
 
-        ctx.fillStyle = fillColor;
-        ctx.borderStyle = borderColor;
-
         var x = data.x;
         var y = data.y;
         var text = data.text;
@@ -128,23 +125,24 @@ Canvas {
         ctx.strokeText(text, x, y);
     }
 
-    function drawShape(ctx, fillColor, borderColor, data){
+    function drawShape(cotx, fillColor, borderColor, data){
+        var ctx = canvas.getContext("2d");
         console.log("Draw shape==========================");
         console.log("fill color is " + fillColor);
         console.log("border color is " + borderColor);
         console.log("points is");
-
-        ctx.fillStyle = fillColor;
-        ctx.borderStyle = borderColor;
 
         var x = data.points[0].x;
         var y = data.points[0].y;
 
         console.log("(" + data.points[0].x + " , " + data.points[0].y + ")");
 
+
         ctx.moveTo(x, y);
 
         var length = data.points.length;
+
+        ctx.beginPath();
 
         for(var i = 1; i < length; i++){
             x = data.points[i].x;
@@ -158,6 +156,7 @@ Canvas {
 
         ctx.lineTo(x, y);
 
+        ctx.closePath();
         ctx.fill();
         ctx.stroke();
     }
@@ -169,6 +168,8 @@ Canvas {
 
         console.log(length);
 
+        ctx.lineWidth = 5;
+
         for(var i = 0; i < length; i++){
             var drawObject = drawObjectModel.get(i);
 
@@ -177,6 +178,9 @@ Canvas {
             var fillColor = drawObject.fillColor;
             var borderColor = drawObject.borderColor;
             var shapeData = drawObject.shapeData;
+
+            ctx.fillStyle = fillColor;
+            ctx.strokeStyle = borderColor;
 
             switch(drawObject.type){
             case DrawObject.Rectangle:{
@@ -196,6 +200,23 @@ Canvas {
                 break;
             }
             }
+        }
+    }
+
+    Canvas{
+        id: currentCanavs
+        anchors.fill: parent
+
+        z: 1
+
+        onPaint: {
+            var ctx = canvas.getContext("2d");
+            var offset = 16;
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "lightgrey";
+            //ctx.setLineDash([4, 2]);
+            //ctx.lineDashOffset = -offset;
+            ctx.strokeRect(10, 10, 100, 100);
         }
     }
 }

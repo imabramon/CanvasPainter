@@ -2,16 +2,16 @@
 
 DrawObject::DrawObject(QString fillColor, QString borderColor)
 {
-    m_fillColor = QColor(fillColor);
-    m_borderColor = QColor(borderColor);
+    m_fillColor = fillColor;
+    m_borderColor = borderColor;
 }
 
-QColor DrawObject::getFillColor() const
+QString DrawObject::getFillColor() const
 {
     return m_fillColor;
 }
 
-QColor DrawObject::getBorderColor() const
+QString DrawObject::getBorderColor() const
 {
     return m_borderColor;
 }

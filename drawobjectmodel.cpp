@@ -11,8 +11,10 @@ DrawObjectModel::DrawObjectModel(QObject *parent): QAbstractListModel(parent), m
 {
     m_list.append(new RectangleDrawObject());
     m_list.append(new CircleDrawObject());
-    m_list.append(new TextDrawObject());
     m_list.append(new ShapeDrawObject());
+    m_list.append(new TextDrawObject());
+
+
 }
 
 DrawObjectModel::~DrawObjectModel()
@@ -73,8 +75,8 @@ QJsonObject DrawObjectModel::get(int i) const
 {
     QJsonObject jsonObject;
     jsonObject["type"] = m_list[i]->getType();
-    jsonObject["fillColor"] = m_list[i]->getFillColor().name();
-    jsonObject["borderColor"] = m_list[i]->getBorderColor().name();
+    jsonObject["fillColor"] = m_list[i]->getFillColor();
+    jsonObject["borderColor"] = m_list[i]->getBorderColor();
     jsonObject["shapeData"] = m_list[i]->getShapeData();
     return jsonObject;
 }

@@ -21,14 +21,14 @@ public:
 
     Q_ENUM(Type)
 
-    QColor getFillColor() const;
-    QColor getBorderColor() const;
+    QString getFillColor() const;
+    QString getBorderColor() const;
 
     virtual Type getType() const {return Type::NonType;}
     virtual QJsonObject getShapeData() const {return QJsonObject();}
 private:
-    QColor m_fillColor;
-    QColor m_borderColor;
+    QString m_fillColor;
+    QString m_borderColor;
 };
 
 #endif // DRAWOBJECT_H
