@@ -8,5 +8,6 @@
         <file>components/ToolItem.qml</file>
         <file>components/ColorPicker.qml</file>
         <file>components/PainterToolBar.qml</file>
+        <file>components/CustomCanvas.qml</file>
     </qresource>
 </RCC>
