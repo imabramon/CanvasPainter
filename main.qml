@@ -18,6 +18,10 @@ Window {
         id: canvas
 
         anchors.fill: parent
+
+        tool: toolBar.tool
+        fill: toolBar.fill
+        border: toolBar.border
     }
 
     PainterToolBar{

@@ -9,10 +9,11 @@ Item{
     property int tool: 0
     property color fill: "white"
     property color border: "black"
+    property int lineWidth: 5
 
-    onToolChanged: console.log(tool)
-    onFillChanged: console.log(fill)
-    onBorderChanged: console.log(border)
+    onToolChanged: console.log("Current tool type is " + tool)
+    onFillChanged: console.log("Current fill color is " + fill)
+    onBorderChanged: console.log("Current border color is " + border)
 
     Canvas {
         id: canvas
@@ -155,17 +156,71 @@ Item{
                 }
             }
         }
+
+        MouseArea{
+            id: mouseArea
+
+            anchors.fill: parent
+
+            onPressed: {
+                console.log("Mouse Area clicked");
+                currentCanvas.startPoint = Qt.point(mouse.x, mouseY)
+                currentCanvas.isPainting = true;
+            }
+
+            onPositionChanged: {
+                currentCanvas.currentPoint = Qt.point(mouse.x, mouseY);
+                currentCanvas.requestPaint();
+            }
+
+            onReleased: {
+                console.log("Mouse Area released");
+                currentCanvas.isPainting = false;
+                currentCanvas.requestPaint();
+            }
+        }
     }
 
 
     Canvas{
         id: currentCanvas
-        anchors.fill: parent
 
+        property bool isPainting: false
+        property point startPoint: Qt.point(0, 0)
+        property point currentPoint: Qt.point(0, 0)
+
+        onStartPointChanged: console.log("Start point is (" + startPoint.x + "," + startPoint.y + ")");
+        onCurrentPointChanged: console.log("Current point is (" + currentPoint.x + "," + currentPoint.y + ")");
+
+        anchors.fill: parent
         z: 1
 
-        onPaint: {
+        function drawRectangle(ctx){
+            ctx.fillStyle = root.fill;
+            ctx.strokeStyle = root.border;
+            ctx.lineWidth = root.lineWidth;
 
+            var rectX = startPoint.x;
+            var rectY = startPoint.y;
+            var rectWidth = currentPoint.x - startPoint.x;
+            var rectHeight = currentPoint.y - startPoint.y;
+
+            ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+            ctx.strokeRect(rectX, rectY, rectWidth, rectHeight);
+        }
+
+        onPaint: {
+            var ctx = currentCanvas.getContext("2d");
+            ctx.clearRect(0, 0, width, height);
+
+            if(isPainting){
+                switch(root.tool){
+                case DrawObject.Rectangle:{
+                    drawRectangle(ctx);
+                    break;
+                }
+                }
+            }
         }
     }
 

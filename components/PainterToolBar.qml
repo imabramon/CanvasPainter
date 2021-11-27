@@ -8,6 +8,10 @@ Item {
     width: toolBar.width
     height: toolBar.height
 
+    property alias tool: toolBar.currentToolType
+    property alias fill: toolBar.currentFillColor
+    property alias border: toolBar.currentBorderColor
+
     ListModel{
         id: toolsModel
 
@@ -68,16 +72,14 @@ Item {
         id: toolBar
 
         property int currentToolType: ToolType.Pen
-        property color currentFillColor: "green"
-        property color currentBorderColor: "black"
+        property alias currentFillColor: fillColorPicker.color
+        property alias currentBorderColor: borderColorPicker.color
 
         border.color: "black"
         border.width: 2
 
         width: toolsRow.width
         height: toolsRow.height
-
-
 
         Row{
             id: toolsRow
