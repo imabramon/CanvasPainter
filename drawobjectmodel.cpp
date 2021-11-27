@@ -80,3 +80,10 @@ QJsonObject DrawObjectModel::get(int i) const
     jsonObject["shapeData"] = m_list[i]->getShapeData();
     return jsonObject;
 }
+
+void DrawObjectModel::addRectangle(int x, int y, int width, int height, QString fillColor, QString borderColor)
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    m_list.append(new RectangleDrawObject(x, y, width, height, fillColor, borderColor));
+    endInsertRows();
+}

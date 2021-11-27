@@ -26,6 +26,7 @@ public:
 
     Q_INVOKABLE QJsonObject get(int i) const;
     Q_INVOKABLE int count() const {return m_list.size();}
+    Q_INVOKABLE void addRectangle(int x, int y, int width, int height, QString fillColor, QString borderColor);
 private:
     QList<DrawObject *> m_list;
 };

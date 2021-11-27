@@ -7,9 +7,15 @@
 class RectangleDrawObject : public DrawObject
 {
 public:
-    RectangleDrawObject(): DrawObject("green", "black"){};
+    RectangleDrawObject();
+    RectangleDrawObject(int x, int y, int width, int height, QString fillColor, QString borderColor);
     Type getType() const;
     QJsonObject getShapeData() const ;
+private:
+    int m_x;
+    int m_y;
+    int m_width;
+    int m_heigh;
 };
 
 #endif // RECTANGLEDRAWOBJECT_H

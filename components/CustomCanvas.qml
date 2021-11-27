@@ -157,25 +157,51 @@ Item{
             }
         }
 
+        Component.onCompleted: {
+            drawObjectModel.rowsInserted.connect(function(){
+                canvas.requestPaint();
+            });
+        }
+
         MouseArea{
             id: mouseArea
 
             anchors.fill: parent
 
-            onPressed: {
+            hoverEnabled: true
+
+            function rectangleClick(mouse){
+                if(currentCanvas.isPainting){
+                    currentCanvas.isPainting = false;
+                    currentCanvas.requestPaint();
+
+                    var rectX = currentCanvas.startPoint.x;
+                    var rectY = currentCanvas.startPoint.y;
+                    var rectWidth = mouse.x - rectX;
+                    var rectHeight = mouse.y - rectY;
+                    drawObjectModel.addRectangle(rectX, rectY, rectWidth, rectHeight, root.fill, root.border);
+                }else{
+                    currentCanvas.isPainting = true;
+                    currentCanvas.startPoint = Qt.point(mouse.x, mouse.y);
+                }
+            }
+
+            onClicked: {
                 console.log("Mouse Area clicked");
-                currentCanvas.startPoint = Qt.point(mouse.x, mouseY)
-                currentCanvas.isPainting = true;
+
+                switch(root.tool){
+                case DrawObject.Rectangle:{
+                    rectangleClick(mouse);
+                    break;
+                }
+                default:{
+                    console.log("Mouse Area Tool matching: Type " + root.tool + " without behavior");
+                }
+                }
             }
 
             onPositionChanged: {
                 currentCanvas.currentPoint = Qt.point(mouse.x, mouseY);
-                currentCanvas.requestPaint();
-            }
-
-            onReleased: {
-                console.log("Mouse Area released");
-                currentCanvas.isPainting = false;
                 currentCanvas.requestPaint();
             }
         }
@@ -189,8 +215,8 @@ Item{
         property point startPoint: Qt.point(0, 0)
         property point currentPoint: Qt.point(0, 0)
 
-        onStartPointChanged: console.log("Start point is (" + startPoint.x + "," + startPoint.y + ")");
-        onCurrentPointChanged: console.log("Current point is (" + currentPoint.x + "," + currentPoint.y + ")");
+        //onStartPointChanged: console.log("Start point is (" + startPoint.x + "," + startPoint.y + ")");
+        //onCurrentPointChanged: console.log("Current point is (" + currentPoint.x + "," + currentPoint.y + ")");
 
         anchors.fill: parent
         z: 1
@@ -218,6 +244,9 @@ Item{
                 case DrawObject.Rectangle:{
                     drawRectangle(ctx);
                     break;
+                }
+                default:{
+                    console.log("Current canvas Tool matching: Type " + root.tool + " without behavior");
                 }
                 }
             }
